@@ -3,6 +3,6 @@
     public enum OperationResult
     {
         Ok = 0,
-        Error = 1
+        InvalidCardNumber = 1
     }
 }

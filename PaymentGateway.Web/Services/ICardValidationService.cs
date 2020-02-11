@@ -4,6 +4,6 @@ namespace PaymentGateway.Web.Services
 {
     public interface ICardValidationService
     {
-        void CheckCard(Card card);
+        void CheckCard(string cardNumber, int expiryMonth, int expiryYear);
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaymentGateway.Api.Entities;
+using PaymentGateway.Web.Exceptions;
+using PaymentGateway.Web.Services;
 
 namespace PaymentGateway.Web.Controllers
 {
@@ -12,9 +9,24 @@ namespace PaymentGateway.Web.Controllers
     [ApiController]
     public class PayController : ControllerBase
     {
+        private readonly IOperationService _operationService;
+
+        public PayController(IOperationService operationService)
+        {
+            _operationService = operationService;
+        }
+
         public  ActionResult<OperationResult> Post([FromBody] PayRequest request)
         {
-            return new ActionResult<OperationResult>(OperationResult.Ok);
+            try
+            {
+                _operationService.Pay(request.OrderId, request.CardNumber, request.ExpiryMonth, request.ExpiryYear, request.Cvv, request.CardholderName, request.AmountKop);
+                return OperationResult.Ok;
+            }
+            catch (PayException e)
+            {
+                return e.ErrorCode;
+            }
         }
     }
 }
