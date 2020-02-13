@@ -32,6 +32,8 @@ namespace PaymentGateway.Web
             services.AddSingleton<IStorageContext, StorageContext>();
             services.AddScoped<IOperationService, OperationService>();
             services.AddScoped<ICardService, CardService>();
+            services.AddScoped<ICardValidationService, CardValidationService>();
+            services.AddScoped<IOperationValidationService, OperationValidationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

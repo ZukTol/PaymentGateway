@@ -3,6 +3,9 @@
     public enum OperationResult
     {
         Ok = 0,
-        InvalidCardNumber = 1
+        InvalidCardInfo = 1,
+        OrderExists = 2,
+        NotEnoughMoney = 3,
+        WrongCvv = 4
     }
 }
