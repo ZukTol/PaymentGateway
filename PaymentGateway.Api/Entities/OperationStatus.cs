@@ -3,7 +3,7 @@
     public enum OperationStatus
     {
         Done = 1,
-        Refused = 2,
-        Refund = 3
+        Refund = 2,
+        NotFound = 3
     }
 }

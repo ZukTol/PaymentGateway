@@ -1,4 +1,4 @@
-﻿using PaymentGateway.Web.Exceptions;
+﻿using PaymentGateway.Web.Exceptions.Pay;
 using PaymentGateway.Web.Utils;
 using System;
 

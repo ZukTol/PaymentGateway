@@ -45,9 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Entities\OperationResult.cs" />
+    <Compile Include="Entities\PayResult.cs" />
     <Compile Include="Entities\OperationStatus.cs" />
     <Compile Include="Entities\PayRequest.cs" />
+    <Compile Include="Entities\RefundRequest.cs" />
+    <Compile Include="Entities\RefundResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IJsonService.cs" />
     <Compile Include="Services\Impl\JsonService.cs" />

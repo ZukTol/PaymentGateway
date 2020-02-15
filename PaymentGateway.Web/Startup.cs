@@ -33,7 +33,8 @@ namespace PaymentGateway.Web
             services.AddScoped<IOperationService, OperationService>();
             services.AddScoped<ICardService, CardService>();
             services.AddScoped<ICardValidationService, CardValidationService>();
-            services.AddScoped<IOperationValidationService, OperationValidationService>();
+            services.AddScoped<IPayValidationService, PayValidationService>();
+            services.AddScoped<IRefundValidationService, RefundValidationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,6 @@
 ﻿namespace PaymentGateway.Api.Entities
 {
-    public enum OperationResult
+    public enum PayResult
     {
         Ok = 0,
         InvalidCardInfo = 1,

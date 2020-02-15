@@ -1,10 +1,10 @@
 ﻿using PaymentGateway.Api.Entities;
 using System;
 
-namespace PaymentGateway.Web.Exceptions
+namespace PaymentGateway.Web.Exceptions.Pay
 {
     internal abstract class PayException : Exception
     {
-        public abstract OperationResult ErrorCode { get; }
+        public abstract PayResult ErrorCode { get; }
     }
 }

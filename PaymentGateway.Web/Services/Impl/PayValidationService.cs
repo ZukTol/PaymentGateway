@@ -1,40 +1,54 @@
 ﻿using PaymentGateway.Web.Entities;
-using PaymentGateway.Web.Exceptions;
+using PaymentGateway.Web.Exceptions.Pay;
 using PaymentGateway.Web.Utils;
 using System;
 using System.Linq;
 
 namespace PaymentGateway.Web.Services.Impl
 {
-    internal class OperationValidationService : IOperationValidationService
+    internal class PayValidationService : IPayValidationService
     {
         private readonly IStorageContext _storageContext;
 
-        public OperationValidationService(IStorageContext storageContext)
+        public PayValidationService(IStorageContext storageContext)
         {
             _storageContext = storageContext;
         }
 
         public void CheckOrder(Guid orderId)
         {
-            if (IsOrderExists(orderId))
-            {
-                throw new OrderExistsException();
-            }
+            CheckOrderExists(orderId);
         }
 
         public void CheckPay(Card card, long amountKop, int cvv)
         {
             CheckHelper.CheckNull(card, nameof(card));
 
-            if(!IsEnoughMoney(card, amountKop))
+            CheckEnoughMoney(card, amountKop);
+            CheckValidCvv(card, cvv);
+        }
+
+        private static void CheckValidCvv(Card card, int cvv)
+        {
+            if (!IsValidCvv(card, cvv))
+            {
+                throw new WrongCvvException();
+            }
+        }
+
+        private static void CheckEnoughMoney(Card card, long amountKop)
+        {
+            if (!IsEnoughMoney(card, amountKop))
             {
                 throw new NotEnoughMoneyException();
             }
+        }
 
-            if(!IsValidCvv(card, cvv))
+        private void CheckOrderExists(Guid orderId)
+        {
+            if (IsOrderExists(orderId))
             {
-                throw new WrongCvvException();
+                throw new OrderExistsException();
             }
         }
 
