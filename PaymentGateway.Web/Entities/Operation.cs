@@ -5,7 +5,7 @@ namespace PaymentGateway.Web.Entities
 {
     public class Operation
     {
-        public Guid OrderId { get; set; }
+        public string OrderId { get; set; }
         public long AmountKop { get; set; }
         public OperationStatus Status { get; set; }
         public Card Card { get; set; }

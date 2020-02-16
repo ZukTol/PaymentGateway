@@ -23,5 +23,14 @@
                 public const string Number = "1234567898765432";
             }
         }
+
+        namespace Http
+        {
+            internal static class Header
+            {
+                internal const string ContentTypeJson = "application/json";
+                internal const string AcceptJson = "application/json;odata=verbose";
+            }
+        }
     }
 }

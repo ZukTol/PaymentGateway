@@ -1,6 +1,4 @@
-﻿using PaymentGateway.Web.Entities;
-
-namespace PaymentGateway.Web.Services
+﻿namespace PaymentGateway.Web.Services
 {
     public interface ICardValidationService
     {

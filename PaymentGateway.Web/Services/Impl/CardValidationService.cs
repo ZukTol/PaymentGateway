@@ -4,28 +4,19 @@ using System;
 
 namespace PaymentGateway.Web.Services.Impl
 {
-    internal class CardValidationService : ICardValidationService
+    public class CardValidationService : ICardValidationService
     {
         public void CheckCard(string cardNumber, int expiryMonth, int expiryYear)
         {
             CheckNumber(cardNumber);
-            CheckExpiryMonth(expiryMonth);
-            CheckExpiryYear(expiryYear);
+            CheckExpiryDate(expiryMonth, expiryYear);
         }
 
-        private void CheckExpiryYear(int expiryYear)
+        private void CheckExpiryDate(int expiryMonth, int expiryYear)
         {
-            if (!IsCorrectYear(expiryYear))
+            if (!IsCorrectDate(expiryMonth, expiryYear))
             {
-                throw new InvalidCardInfoException();
-            }
-        }
-
-        private void CheckExpiryMonth(int expiryMonth)
-        {
-            if (!IsCorrectMonth(expiryMonth))
-            {
-                throw new InvalidCardInfoException();
+                throw new InvalidCardExpiryDateException();
             }
         }
 
@@ -33,7 +24,7 @@ namespace PaymentGateway.Web.Services.Impl
         {
             if(IsEmpty(cardNumber) || !IsCorrectNumberLength(cardNumber) || !cardNumber.IsOnlyDigits())
             {
-                throw new InvalidCardInfoException();
+                throw new InvalidCardNumberException();
             }
         }
 
@@ -52,12 +43,12 @@ namespace PaymentGateway.Web.Services.Impl
             return month > 0 && month <= 12;
         }
 
-        private static bool IsCorrectYear(int year)
+        private static bool IsCorrectDate(int expiryMonth, int year)
         {
             try
             {
-                var date = new DateTime(year, 1, 1);
-                return true;
+                var date = new DateTime(year, expiryMonth, 1).AddMonths(1);
+                return DateTime.Now < date;
             }
             catch
             {

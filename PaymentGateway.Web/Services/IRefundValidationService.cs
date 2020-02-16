@@ -4,6 +4,6 @@ namespace PaymentGateway.Web.Services
 {
     public interface IRefundValidationService
     {
-        void CheckOrder(Guid orderId);
+        void CheckOrder(string orderId);
     }
 }

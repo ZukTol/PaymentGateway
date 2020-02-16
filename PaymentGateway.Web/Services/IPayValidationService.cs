@@ -6,6 +6,6 @@ namespace PaymentGateway.Web.Services
     public interface IPayValidationService
     {
         void CheckPay(Card card, long amountKop, int cvv);
-        void CheckOrder(Guid orderId);
+        void CheckOrder(string orderId);
     }
 }

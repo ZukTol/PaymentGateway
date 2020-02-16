@@ -4,6 +4,6 @@ namespace PaymentGateway.Api.Entities
 {
     public class RefundRequest
     {
-        public Guid OrderId { get; set; }
+        public string OrderId { get; set; }
     }
 }

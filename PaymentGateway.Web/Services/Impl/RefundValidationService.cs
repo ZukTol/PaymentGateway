@@ -13,13 +13,13 @@ namespace PaymentGateway.Web.Services.Impl
             _storageContext = storageContext;
         }
 
-        public void CheckOrder(Guid orderId)
+        public void CheckOrder(string orderId)
         {
             CheckOrderExists(orderId);
             CheckOperationStatus(orderId);
         }
 
-        private void CheckOperationStatus(Guid orderId)
+        private void CheckOperationStatus(string orderId)
         {
             if (!IsDoneStatus(orderId))
             {
@@ -27,7 +27,7 @@ namespace PaymentGateway.Web.Services.Impl
             }
         }
 
-        private void CheckOrderExists(Guid orderId)
+        private void CheckOrderExists(string orderId)
         {
             if (!IsOrderExixts(orderId))
             {
@@ -35,12 +35,12 @@ namespace PaymentGateway.Web.Services.Impl
             }
         }
 
-        private bool IsOrderExixts(Guid orderId)
+        private bool IsOrderExixts(string orderId)
         {
             return _storageContext.OperationList.Any(o => o.OrderId == orderId);
         }
 
-        private bool IsDoneStatus(Guid orderId)
+        private bool IsDoneStatus(string orderId)
         {
             var operation = _storageContext.OperationList.First(o => o.OrderId == orderId);
             return operation.Status == Api.Entities.OperationStatus.Done;

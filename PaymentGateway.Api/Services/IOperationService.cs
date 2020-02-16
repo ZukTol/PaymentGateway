@@ -1,12 +1,14 @@
 ﻿using PaymentGateway.Api.Entities;
 using System;
+using System.Threading.Tasks;
 
 namespace PaymentGateway.Api.Services
 {
     public interface IOperationService
     {
-        PayResult Pay(Guid orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, string cardholderName, long amountKop);
-        OperationStatus GetStatus(Guid orderId);
-        PayResult Refund(Guid orderId);
+        void InitServerPath(string serverPath);
+        Task<PayResult> Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, long amountKop);
+        OperationStatus GetStatus(string orderId);
+        PayResult Refund(string orderId);
     }
 }

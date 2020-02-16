@@ -15,7 +15,7 @@ namespace PaymentGateway.Web.Services.Impl
             _storageContext = storageContext;
         }
 
-        public void CheckOrder(Guid orderId)
+        public void CheckOrder(string orderId)
         {
             CheckOrderExists(orderId);
         }
@@ -44,7 +44,7 @@ namespace PaymentGateway.Web.Services.Impl
             }
         }
 
-        private void CheckOrderExists(Guid orderId)
+        private void CheckOrderExists(string orderId)
         {
             if (IsOrderExists(orderId))
             {
@@ -52,7 +52,7 @@ namespace PaymentGateway.Web.Services.Impl
             }
         }
 
-        private bool IsOrderExists(Guid orderId)
+        private bool IsOrderExists(string orderId)
         {
             return _storageContext.OperationList.Any(o => o.OrderId == orderId);
         }

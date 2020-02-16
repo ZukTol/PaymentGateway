@@ -21,7 +21,7 @@ namespace PaymentGateway.Web.Services.Impl
             _refundValidationService = refundValidationService;
         }
 
-        public PayResult Pay(Guid orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, string cardholderName, long amountKop)
+        public PayResult Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, string cardholderName, long amountKop)
         {
             var card = _cardService.GetCard(cardNumber, expiryMonth, expiryYear, cardNumber);
             CheckPayOperation(card, orderId, amountKop, cvv);
@@ -30,13 +30,13 @@ namespace PaymentGateway.Web.Services.Impl
             return PayResult.Ok;
         }
 
-        public OperationStatus GetStatus(Guid orderId)
+        public OperationStatus GetStatus(string orderId)
         {
-            var operation = _storageContext.OperationList.FirstOrDefault(o => o.OrderId == orderId);
+            var operation = _storageContext.OperationList.FirstOrDefault(o => string.Equals(o.OrderId, orderId, StringComparison.OrdinalIgnoreCase));
             return operation?.Status ?? OperationStatus.NotFound;
         }
 
-        public RefundResult Refund(Guid orderId)
+        public RefundResult Refund(string orderId)
         {
             _refundValidationService.CheckOrder(orderId);
             SetOrderStatusRefund(orderId);
@@ -49,24 +49,24 @@ namespace PaymentGateway.Web.Services.Impl
             _cardService.Decrease(cardId, amountKop);
         }
 
-        private void RestoreCardBalance(Guid orderId)
+        private void RestoreCardBalance(string orderId)
         {
             var order = GetOperationById(orderId);
             _cardService.Decrease(order.Card.Id, order.AmountKop);
         }
 
-        private void SetOrderStatusRefund(Guid orderId)
+        private void SetOrderStatusRefund(string orderId)
         {
             var order = GetOperationById(orderId);
             order.Status = OperationStatus.Refund;
         }
 
-        private Operation GetOperationById(Guid orderId)
+        private Operation GetOperationById(string orderId)
         {
             return _storageContext.OperationList.First(o => o.OrderId == orderId);
         }
 
-        private void CheckPayOperation(Card card, Guid orderId, long amountKop, int cvv)
+        private void CheckPayOperation(Card card, string orderId, long amountKop, int cvv)
         {
             CheckHelper.CheckNull(card, nameof(card));
 
@@ -74,13 +74,13 @@ namespace PaymentGateway.Web.Services.Impl
             _operationValidationService.CheckPay(card, amountKop, cvv);
         }
 
-        private void AddPayOperation(Guid orderId, Card card, long amountKop)
+        private void AddPayOperation(string orderId, Card card, long amountKop)
         {
             var operation = CreatePayOperation(orderId, card, amountKop);
             _storageContext.OperationList.Add(operation);
         }
 
-        private Operation CreatePayOperation(Guid orderId, Card card, long amountKop)
+        private Operation CreatePayOperation(string orderId, Card card, long amountKop)
         {
             return new Operation()
             {

@@ -31,7 +31,7 @@ namespace PaymentGateway.Web.Controllers
 
 
         [HttpGet("status/{orderId}")]
-        public OperationStatus GetStatus(Guid orderId)
+        public OperationStatus GetStatus(string orderId)
         {
             return _operationService.GetStatus(orderId);
         }
