@@ -6,25 +6,36 @@ using System.Linq;
 
 namespace PaymentGateway.Web.Services.Impl
 {
-    internal class PayValidationService : IPayValidationService
+    public class PayValidationService : IPayValidationService
     {
         private readonly IStorageContext _storageContext;
+        private readonly ICardValidationService _cardValidationService;
 
-        public PayValidationService(IStorageContext storageContext)
+        public PayValidationService(IStorageContext storageContext, ICardValidationService cardValidationService)
         {
             _storageContext = storageContext;
+            _cardValidationService = cardValidationService;
         }
 
         public void CheckOrder(string orderId)
         {
+            CheckOrderIdEmpty(orderId);
             CheckOrderExists(orderId);
+        }
+
+        private void CheckOrderIdEmpty(string orderId)
+        {
+            if (string.IsNullOrEmpty(orderId))
+            {
+                throw new OrderIdEmptyException();
+            }
         }
 
         public void CheckPay(Card card, long amountKop, int cvv)
         {
             CheckHelper.CheckNull(card, nameof(card));
 
-            CheckEnoughMoney(card, amountKop);
+            _cardValidationService.CheckEnoughMoney(card, amountKop);
             CheckValidCvv(card, cvv);
         }
 
@@ -32,17 +43,11 @@ namespace PaymentGateway.Web.Services.Impl
         {
             if (!IsValidCvv(card, cvv))
             {
-                throw new WrongCvvException();
+                throw new InvalidCvvException();
             }
         }
 
-        private static void CheckEnoughMoney(Card card, long amountKop)
-        {
-            if (!IsEnoughMoney(card, amountKop))
-            {
-                throw new NotEnoughMoneyException();
-            }
-        }
+        
 
         private void CheckOrderExists(string orderId)
         {
@@ -57,10 +62,7 @@ namespace PaymentGateway.Web.Services.Impl
             return _storageContext.OperationList.Any(o => o.OrderId == orderId);
         }
 
-        private static bool IsEnoughMoney(Card card, long amountKop)
-        {
-            return card.IsUnlimited || card.Balance > amountKop;
-        }
+        
 
         private static bool IsValidCvv(Card card, int cvv)
         {

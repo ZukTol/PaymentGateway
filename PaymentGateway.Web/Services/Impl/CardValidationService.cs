@@ -1,4 +1,5 @@
-﻿using PaymentGateway.Web.Exceptions.Pay;
+﻿using PaymentGateway.Web.Entities;
+using PaymentGateway.Web.Exceptions.Pay;
 using PaymentGateway.Web.Utils;
 using System;
 
@@ -10,6 +11,14 @@ namespace PaymentGateway.Web.Services.Impl
         {
             CheckNumber(cardNumber);
             CheckExpiryDate(expiryMonth, expiryYear);
+        }
+
+        public void CheckEnoughMoney(Card card, long amountKop)
+        {
+            if (!IsEnoughMoney(card, amountKop))
+            {
+                throw new NotEnoughMoneyException();
+            }
         }
 
         private void CheckExpiryDate(int expiryMonth, int expiryYear)
@@ -54,6 +63,11 @@ namespace PaymentGateway.Web.Services.Impl
             {
                 return false;
             }
+        }
+
+        private static bool IsEnoughMoney(Card card, long amountKop)
+        {
+            return card.IsUnlimited || card.Balance > amountKop;
         }
     }
 }

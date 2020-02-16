@@ -51,7 +51,7 @@ namespace PaymentGateway.Web.Controllers
             CheckHelper.CheckNull(request, nameof(request));
             try
             {
-                _operationService.Pay(request.OrderId, request.CardNumber, request.ExpiryMonth, request.ExpiryYear, request.Cvv, request.CardholderName, request.AmountKop);
+                _operationService.Pay(request.OrderId, request.CardNumber, request.ExpiryMonth, request.ExpiryYear, request.Cvv, request.AmountKop);
                 
                 return PayResult.Ok;
             }

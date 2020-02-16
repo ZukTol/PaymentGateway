@@ -21,6 +21,7 @@
                 public const int ExpireYear = 2021;
                 public const int ExpiryMonth = 3;
                 public const string Number = "1234567898765432";
+                public const long Balance = 100;
             }
         }
 

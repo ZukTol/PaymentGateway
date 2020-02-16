@@ -7,6 +7,7 @@
         OrderExists = 2,
         NotEnoughMoney = 3,
         InvalidCvv = 4,
-        InvalidExpiryDate = 5
+        InvalidExpiryDate = 5,
+        OrderIdEmpty = 6
     }
 }

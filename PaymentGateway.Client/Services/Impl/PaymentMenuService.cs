@@ -57,6 +57,9 @@ namespace PaymentGateway.Client.Services.Impl
                 case PayResult.InvalidExpiryDate:
                     resultDescription = TextConstants.Payment.PayResult.InvalidExpiryDate;
                     break;
+                case PayResult.OrderIdEmpty:
+                    resultDescription = TextConstants.Payment.PayResult.OrderIdEmpty;
+                    break;
                 default:
                     resultDescription = TextConstants.Payment.PayResult.Unknown;
                     break;

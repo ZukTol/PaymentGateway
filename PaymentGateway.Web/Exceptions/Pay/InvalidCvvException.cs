@@ -2,7 +2,7 @@
 
 namespace PaymentGateway.Web.Exceptions.Pay
 {
-    internal class WrongCvvException : PayException
+    public class InvalidCvvException : PayException
     {
         public override PayResult ErrorCode => PayResult.InvalidCvv;
     }

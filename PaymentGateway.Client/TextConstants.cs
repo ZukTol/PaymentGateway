@@ -39,6 +39,7 @@ namespace PaymentGateway.Client
                 public const string NotEnoughMoney = "Недостаточно средств для проведения операции";
                 public const string InvalidCvv = "Некорректный код подтверждения";
                 public const string InvalidExpiryDate = "Срок действия карты истёк";
+                public const string OrderIdEmpty = "Номер заказа не может быть пустым";
                 public const string Unknown = "Неизвестная ошибка";
             }
         }

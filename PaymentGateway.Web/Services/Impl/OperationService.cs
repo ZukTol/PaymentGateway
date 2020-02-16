@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PaymentGateway.Web.Services.Impl
 {
-    internal class OperationService : IOperationService
+    public class OperationService : IOperationService
     {
         private readonly ICardService _cardService;
         private readonly IStorageContext _storageContext;
@@ -21,7 +21,7 @@ namespace PaymentGateway.Web.Services.Impl
             _refundValidationService = refundValidationService;
         }
 
-        public PayResult Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, string cardholderName, long amountKop)
+        public PayResult Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, long amountKop)
         {
             var card = _cardService.GetCard(cardNumber, expiryMonth, expiryYear, cardNumber);
             CheckPayOperation(card, orderId, amountKop, cvv);
@@ -52,7 +52,7 @@ namespace PaymentGateway.Web.Services.Impl
         private void RestoreCardBalance(string orderId)
         {
             var order = GetOperationById(orderId);
-            _cardService.Decrease(order.Card.Id, order.AmountKop);
+            _cardService.Increase(order.Card.Id, order.AmountKop);
         }
 
         private void SetOrderStatusRefund(string orderId)

@@ -19,6 +19,7 @@ namespace PaymentGateway.Web.Services.Impl
         public void Decrease(Guid cardId, long amountKop)
         {
             var card = _storageContext.CardList.First(c => c.Id == cardId);
+            _cardValidationService.CheckEnoughMoney(card, amountKop);
             card.Balance -= amountKop;
         }
 

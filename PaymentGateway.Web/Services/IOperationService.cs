@@ -5,7 +5,7 @@ namespace PaymentGateway.Web.Services
 {
     public interface IOperationService
     {
-        PayResult Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, string cardholderName, long amountKop);
+        PayResult Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, long amountKop);
         OperationStatus GetStatus(string orderId);
         RefundResult Refund(string orderId);
     }
