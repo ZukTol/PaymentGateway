@@ -1,6 +1,7 @@
 ﻿using PaymentGateway.Api.Entities;
 using PaymentGateway.Api.Utils;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.Api.Services.Impl
@@ -52,5 +53,10 @@ namespace PaymentGateway.Api.Services.Impl
             return result;
         }
 
+        public async Task<List<Operation>> GetOperationList()
+        {
+            var responce = await RestHelper.Get(_serverPath);
+            return JsonHelper.Deserialize<List<Operation>>(responce);
+        }
     }
 }

@@ -41,6 +41,7 @@ namespace PaymentGateway.Client
                 .AddScoped<IPaymentMenuService, PaymentMenuService>()
                 .AddScoped<IRefundMenuService, RefundMenuService>()
                 .AddScoped<IStatusMenuService, StatusMenuService>()
+                .AddScoped<IOperationListService, OperationListService>()
                 .AddSingleton(config);
 
             _serviceProvider = serviceCollection.BuildServiceProvider();

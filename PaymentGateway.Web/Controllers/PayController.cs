@@ -7,6 +7,7 @@ using PaymentGateway.Web.Exceptions.Refund;
 using PaymentGateway.Web.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PaymentGateway.Web.Controllers
 {
@@ -24,9 +25,17 @@ namespace PaymentGateway.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Operation> Get()
+        public IEnumerable<Api.Entities.Operation> Get()
         {
-            return _storageContext.OperationList;
+            return _storageContext.OperationList.Select(o=> {
+                return new Api.Entities.Operation
+                {
+                    AmountKop = o.AmountKop,
+                    CardNumber = o.Card.Number,
+                    OrderId = o.OrderId,
+                    Status = o.Status
+                };
+            });
         }
 
 

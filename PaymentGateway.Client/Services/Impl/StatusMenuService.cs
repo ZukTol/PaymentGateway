@@ -30,7 +30,14 @@ namespace PaymentGateway.Client.Services.Impl
         private void PrintOperationResult(OperationStatus result)
         {
             string resultDescription;
+            resultDescription = GetOperationStatus(result);
 
+            Console.WriteLine(TextConstants.Status.Menu.OperationResultFormat, resultDescription);
+        }
+
+        public string GetOperationStatus(OperationStatus result)
+        {
+            string resultDescription;
             switch (result)
             {
                 case OperationStatus.Done:
@@ -47,7 +54,7 @@ namespace PaymentGateway.Client.Services.Impl
                     break;
             }
 
-            Console.WriteLine(TextConstants.Status.Menu.OperationResultFormat, resultDescription);
+            return resultDescription;
         }
     }
 }

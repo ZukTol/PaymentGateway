@@ -20,7 +20,6 @@ namespace PaymentGateway.Web.Services.Impl
             CardList.Add(new Card
             {
                 Id = Guid.NewGuid(),
-                CardholderName = Card1.CardholderName,
                 Cvv = Card1.Cvv,
                 ExpireYear = Card1.ExpireYear,
                 ExpiryMonth = Card1.ExpiryMonth,
@@ -31,7 +30,6 @@ namespace PaymentGateway.Web.Services.Impl
             CardList.Add(new Card
             {
                 Id = Guid.NewGuid(),
-                CardholderName = Card2.CardholderName,
                 Cvv = Card2.Cvv,
                 ExpireYear = Card2.ExpireYear,
                 ExpiryMonth = Card2.ExpiryMonth,

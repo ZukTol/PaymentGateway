@@ -2,7 +2,7 @@
 
 namespace PaymentGateway.Api.Utils
 {
-    public class CheckHelper
+    public static class CheckHelper
     {
         public static void CheckNull([ValidatedNotNull] object value, string arg)
         {

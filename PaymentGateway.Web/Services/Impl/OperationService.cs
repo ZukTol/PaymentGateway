@@ -61,7 +61,7 @@ namespace PaymentGateway.Web.Services.Impl
             order.Status = OperationStatus.Refund;
         }
 
-        private Operation GetOperationById(string orderId)
+        private Entities.Operation GetOperationById(string orderId)
         {
             return _storageContext.OperationList.First(o => o.OrderId == orderId);
         }
@@ -80,9 +80,9 @@ namespace PaymentGateway.Web.Services.Impl
             _storageContext.OperationList.Add(operation);
         }
 
-        private Operation CreatePayOperation(string orderId, Card card, long amountKop)
+        private Entities.Operation CreatePayOperation(string orderId, Card card, long amountKop)
         {
-            return new Operation()
+            return new Entities.Operation()
             {
                 AmountKop = amountKop,
                 Card = card,

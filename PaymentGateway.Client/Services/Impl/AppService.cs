@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.Client.Services.Impl
@@ -10,12 +8,14 @@ namespace PaymentGateway.Client.Services.Impl
         private readonly IPaymentMenuService _paymentMenuService;
         private readonly IRefundMenuService _refundMenuService;
         private readonly IStatusMenuService _statusMenuService;
+        private readonly IOperationListService _operationListService;
 
-        public AppService(IPaymentMenuService paymentMenuService, IRefundMenuService refundMenuService, IStatusMenuService statusMenuService)
+        public AppService(IPaymentMenuService paymentMenuService, IRefundMenuService refundMenuService, IStatusMenuService statusMenuService, IOperationListService operationListService)
         {
             _paymentMenuService = paymentMenuService;
             _refundMenuService = refundMenuService;
             _statusMenuService = statusMenuService;
+            _operationListService = operationListService;
         }
 
         public async Task RunApp()
@@ -25,7 +25,16 @@ namespace PaymentGateway.Client.Services.Impl
                 PrintMenu();
                 var key = Console.ReadKey();
                 Console.WriteLine();
-                switch (key.Key)
+                await ProcessUserInput(key.Key);
+                Console.WriteLine();
+            }
+        }
+
+        private async Task ProcessUserInput(ConsoleKey key)
+        {
+            try
+            {
+                switch (key)
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
@@ -33,7 +42,7 @@ namespace PaymentGateway.Client.Services.Impl
                         break;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        GetOperationInfo();
+                        await GetOperationInfo();
                         break;
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
@@ -51,8 +60,12 @@ namespace PaymentGateway.Client.Services.Impl
                     case ConsoleKey.NumPad6:
                         return;
                 }
-                Console.WriteLine();
             }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+            }
+
         }
 
         private static void PrintMenu()
@@ -82,12 +95,13 @@ namespace PaymentGateway.Client.Services.Impl
 
         private void GetCardInfo()
         {
-
+            Console.WriteLine($"{Api.Constants.Card.Card1.Number} \t {Api.Constants.Card.Card1.ExpiryMonth}/{Api.Constants.Card.Card1.ExpireYear} \t {Api.Constants.Card.Card1.Cvv}");
+            Console.WriteLine($"{Api.Constants.Card.Card2.Number} \t {Api.Constants.Card.Card2.ExpiryMonth}/{Api.Constants.Card.Card2.ExpireYear} \t {Api.Constants.Card.Card2.Cvv}");
         }
 
-        private void GetOperationInfo()
+        private async Task GetOperationInfo()
         {
-
+            await _operationListService.PrintOperationList();
         }
     }
 }
