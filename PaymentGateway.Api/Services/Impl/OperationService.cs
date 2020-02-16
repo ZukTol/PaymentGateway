@@ -1,9 +1,6 @@
 ﻿using PaymentGateway.Api.Entities;
 using PaymentGateway.Api.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.Api.Services.Impl
@@ -12,14 +9,16 @@ namespace PaymentGateway.Api.Services.Impl
     {
         private string _serverPath = string.Empty;
 
-        public OperationStatus GetStatus(string orderId)
+        public async Task<OperationStatus> GetStatus(string orderId)
         {
-            throw new NotImplementedException();
+            var serverAddress = string.Concat(_serverPath, Constants.Ctrl.Slash, Constants.Service.GetStatus , Constants.Ctrl.Slash, orderId);
+            var response = await RestHelper.Get(serverAddress);
+            return ParseEnumResult<OperationStatus>(response);
         }
 
         public void InitServerPath(string serverPath)
         {
-            _serverPath = string.Empty;
+            _serverPath = serverPath;
         }
 
         public async Task<PayResult> Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, long amountKop)
@@ -34,12 +33,24 @@ namespace PaymentGateway.Api.Services.Impl
                 OrderId = orderId
             };
             var responce = await RestHelper.Post(_serverPath, JsonHelper.Serialize(request));
-            return PayResult.Ok;
+            return ParseEnumResult<PayResult>(responce);
         }
 
-        public PayResult Refund(string orderId)
+        public async Task<RefundResult> Refund(string orderId)
         {
-            throw new NotImplementedException();
+            var serverAddress = string.Concat(_serverPath, Constants.Ctrl.Slash, Constants.Service.Refund);
+            var request = new RefundRequest { OrderId = orderId };
+            var responce = await RestHelper.Post(serverAddress, JsonHelper.Serialize(request));
+            return ParseEnumResult<RefundResult>(responce);
         }
+
+        private static T ParseEnumResult<T>(string responce) where T : Enum
+        {
+            CheckHelper.CheckNull(responce, nameof(responce));
+
+            var result = (T)Enum.Parse(typeof(T), responce);
+            return result;
+        }
+
     }
 }

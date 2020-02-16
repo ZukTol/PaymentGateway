@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaymentGateway.Api.Entities;
+using PaymentGateway.Api.Utils;
 using PaymentGateway.Web.Entities;
 using PaymentGateway.Web.Exceptions.Pay;
 using PaymentGateway.Web.Exceptions.Refund;
 using PaymentGateway.Web.Services;
-using PaymentGateway.Web.Utils;
 using System;
 using System.Collections.Generic;
 

@@ -28,20 +28,9 @@
         {
             internal static class Header
             {
-                public const string ContentTypeJson = "application/json";
-                public const string AcceptJson = "application/json;odata=verbose";
+                internal const string ContentTypeJson = "application/json";
+                internal const string AcceptJson = "application/json;odata=verbose";
             }
-        }
-
-        internal static class Service
-        {
-            public const string Refund = "refund";
-            public const string GetStatus = "status";
-        }
-
-        internal static class Ctrl
-        {
-            public const string Slash = "/";
         }
     }
 }

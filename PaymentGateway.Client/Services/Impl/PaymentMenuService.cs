@@ -2,8 +2,6 @@
 using PaymentGateway.Api.Services;
 using PaymentGateway.Client.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.Client.Services.Impl
@@ -19,14 +17,16 @@ namespace PaymentGateway.Client.Services.Impl
 
         public async Task RunMenu()
         {
-            Console.WriteLine("Введите данные операции, или нажмите Escape для отмены");
+            Console.WriteLine(TextConstants.Payment.Menu.EnterData);
 
-            var orderId = ConsoleHelper.GetTextInput("Введите номер заказа"); ;
+            var orderId = ConsoleHelper.GetTextInput(TextConstants.Payment.Menu.EnterOrderId); ;
             var amountKop = GetAmountKop();
-            var cardNumber = ConsoleHelper.GetTextInput("Введите номер карты (16 цифр)"); ;
-            var expiryMonth = ConsoleHelper.GetIntegerInput("Введите месяц окончания действия карты числом");
-            var expiryYear = ConsoleHelper.GetIntegerInput("Введите год окончания действия карты числом (4 цифры)");
-            var cvv = ConsoleHelper.GetIntegerInput("Введите проверочный код карты CVV (3 цифры)");
+            var cardNumber = ConsoleHelper.GetTextInput(TextConstants.Payment.Menu.EnterCardNumber); ;
+            var expiryMonth = ConsoleHelper.GetIntegerInput(TextConstants.Payment.Menu.EnterExpiryMonth);
+            var expiryYear = ConsoleHelper.GetIntegerInput(TextConstants.Payment.Menu.EnterExpiryYear);
+            var cvv = ConsoleHelper.GetIntegerInput(TextConstants.Payment.Menu.EnterCvv);
+
+
 
             var result = await _operationService.Pay(orderId, cardNumber, expiryMonth, expiryYear, cvv, amountKop);
 
@@ -35,12 +35,38 @@ namespace PaymentGateway.Client.Services.Impl
 
         private void PrintOperationResult(PayResult result)
         {
-            Console.WriteLine($"Результат операции: {result}");
+            string resultDescription;
+
+            switch (result)
+            {
+                case PayResult.Ok:
+                    resultDescription = TextConstants.Payment.PayResult.Ok;
+                    break;
+                case PayResult.InvalidCardNumber:
+                    resultDescription = TextConstants.Payment.PayResult.InvalidCardNumber;
+                    break;
+                case PayResult.OrderExists:
+                    resultDescription = TextConstants.Payment.PayResult.OrderExists;
+                    break;
+                case PayResult.NotEnoughMoney:
+                    resultDescription = TextConstants.Payment.PayResult.NotEnoughMoney;
+                    break;
+                case PayResult.InvalidCvv:
+                    resultDescription = TextConstants.Payment.PayResult.InvalidCvv;
+                    break;
+                case PayResult.InvalidExpiryDate:
+                    resultDescription = TextConstants.Payment.PayResult.InvalidExpiryDate;
+                    break;
+                default:
+                    resultDescription = TextConstants.Payment.PayResult.Unknown;
+                    break;
+            }
+            Console.WriteLine(TextConstants.Payment.Menu.OperationResultFormat, resultDescription);
         }
 
         private long GetAmountKop()
         {
-            var input = ConsoleHelper.GetTextInput("Введите сумму заказа");
+            var input = ConsoleHelper.GetTextInput(TextConstants.Payment.Menu.EnterAmount);
             return long.Parse(input, System.Globalization.NumberStyles.Integer);
         }
     }

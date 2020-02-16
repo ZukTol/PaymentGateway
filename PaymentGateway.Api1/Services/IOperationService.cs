@@ -8,7 +8,7 @@ namespace PaymentGateway.Api.Services
     {
         void InitServerPath(string serverPath);
         Task<PayResult> Pay(string orderId, string cardNumber, int expiryMonth, int expiryYear, int cvv, long amountKop);
-        Task<OperationStatus> GetStatus(string orderId);
-        Task<RefundResult> Refund(string orderId);
+        OperationStatus GetStatus(string orderId);
+        PayResult Refund(string orderId);
     }
 }

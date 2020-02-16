@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaymentGateway.Web.Utils
+namespace PaymentGateway.Api.Utils
 {
     public class CheckHelper
     {

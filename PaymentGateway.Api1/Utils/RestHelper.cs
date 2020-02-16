@@ -13,12 +13,6 @@ namespace PaymentGateway.Api.Utils
             var req = CreatePostRequest(request, postData);
             return await PostInternal(req);
 
-        }       
-
-        public static async Task<string> Get(string request)
-        {
-            var req = CreateGetRequest(request);   
-            return await GetInternal(req);
         }
 
         private static async Task<string> PostInternal(HttpWebRequest req)
@@ -45,28 +39,6 @@ namespace PaymentGateway.Api.Utils
             {
                 st.Write(_byte, 0, _byte.Length);
             }
-            return req;
-        }
-
-        private static async Task<string> GetInternal(HttpWebRequest req)
-        {
-            var httpWebResponse = (HttpWebResponse)await req.GetResponseAsync();
-            if (httpWebResponse.StatusCode != HttpStatusCode.OK)
-            {
-                return string.Empty;
-            }
-            using (var reader = new StreamReader(httpWebResponse.GetResponseStream()))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        private static HttpWebRequest CreateGetRequest(string request)
-        {
-            var req = (HttpWebRequest)WebRequest.Create(request);
-            req.Method = WebRequestMethods.Http.Get;
-            req.ContentType = Constants.Http.Header.ContentTypeJson;
-            req.AutomaticDecompression = DecompressionMethods.GZip;
             return req;
         }
     }

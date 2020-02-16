@@ -8,6 +8,7 @@ namespace PaymentGateway.Client
     {
         internal static class Cfg
         {
+            public const string SettingsFileName = "appsettings.json";
             public const string ServerPath = "ServerPath";
         }
     }

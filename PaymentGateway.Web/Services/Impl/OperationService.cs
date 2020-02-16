@@ -1,6 +1,6 @@
 ﻿using PaymentGateway.Api.Entities;
+using PaymentGateway.Api.Utils;
 using PaymentGateway.Web.Entities;
-using PaymentGateway.Web.Utils;
 using System;
 using System.Linq;
 

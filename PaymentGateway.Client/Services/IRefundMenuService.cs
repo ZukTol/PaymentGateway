@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PaymentGateway.Client.Services
 {
-    internal interface IAppService
+    internal interface IRefundMenuService
     {
-        Task RunApp();
+        Task RunMenu();
     }
 }
