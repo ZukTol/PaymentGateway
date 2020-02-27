@@ -51,9 +51,7 @@ namespace PaymentGateway.Web.Controllers
             CheckHelper.CheckNull(request, nameof(request));
             try
             {
-                _operationService.Pay(request.OrderId, request.CardNumber, request.ExpiryMonth, request.ExpiryYear, request.Cvv, request.AmountKop);
-                
-                return PayResult.Ok;
+                return _operationService.Pay(request.OrderId, request.CardNumber, request.ExpiryMonth, request.ExpiryYear, request.Cvv, request.AmountKop);   
             }
             catch (PayException e)
             {
@@ -68,8 +66,7 @@ namespace PaymentGateway.Web.Controllers
 
             try
             {
-                _operationService.Refund(request.OrderId);
-                return RefundResult.Ok;
+                return _operationService.Refund(request.OrderId);
             }
             catch (RefundException e)
             {
